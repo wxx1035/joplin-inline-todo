@@ -8,6 +8,7 @@ import { mark_current_line_as_done } from './mark_todo';
 import { regexes, regexTitles, summaryTitles } from './settings_tables';
 import { createSummaryNote, isSummary } from './summary_note';
 import { registerEditor } from './editor';
+import { registerStatisticPlugin } from './statPlugin/plugin';
 
 const globalLogger = new Logger();
 globalLogger.addTarget(TargetType.Console);
@@ -241,6 +242,8 @@ joplin.plugins.register({
 				update_summary(builder.summary, builder.settings, currentNote.id, currentNote.body);
 			}
 		});
+
+		await registerStatisticPlugin();
 
 		if (await joplin.settings.value('styleConfluenceTodos')) {
 			await joplin.contentScripts.register(
